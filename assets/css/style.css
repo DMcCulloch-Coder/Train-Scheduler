@@ -1,4 +1,43 @@
 body {
-    background-image: url('../images/seamless_paper_texture.png');
+    background-image: url(../images/seamless_paper_texture.png);
+    background-repeat: repeat;
+    font-family: 'Varela', sans-serif;
+    text-shadow: 1px 1px 1px gray;
+    color: purple
+
+
+}
+
+p {
     
+    text-align: center;
+    padding: 5px;
+
+}
+
+.navbar-brand {
+    font-family: 'Nova Square', cursive;
+    font-size: 4rem;
+    text-shadow: 2px 2px 2px gray;
+
+}
+
+.btn {
+    background-color: purple;
+    color: white;
+    text-shadow: 1px 1px 1px gray;
+
+
+}
+
+.btn:hover{
+    background-color: white;
+    color: purple;
+    border: 1px solid black;
+
+}
+
+.table {
+    text-shadow: none;
+    color: purple
 }

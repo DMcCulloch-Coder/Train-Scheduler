@@ -13,11 +13,21 @@ $(document).ready(function(){
     firebase.initializeApp(firebaseConfig);
     let database = firebase.database();
 
+    //set table from database
     
 
+    $('.btn').on('click', function() {
+        event.preventDefault();
+        //submit form info!!!
+        $('#train-table tr').empty();
 
+        let trainName = $('#train-name').val().trim();
 
+        console.log(trainName);
 
+        $('#train-name').val();
+
+    })
 
 
 
