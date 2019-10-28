@@ -14,22 +14,65 @@ $(document).ready(function(){
     let database = firebase.database();
 
     //set table from database
-    
+
+    database.ref('/trains').on('value', function (snapshot) {
+        //create a for loop to go through an array that makes a table row for each item in the array   
+        $('#train-table tr').empty();     
+        let table = snapshot.val();
+        console.log(table) //test
+
+        for (let i = 0; i < snapshot.length; i++) {    
+            let trainObject = snapshot[i];
+
+            let newRow = $('<tr>');
+
+            let newCol = $('<td>');
+            newCol.text(trainObject.trainName)
+            newRow.append(newCol)
+
+            newCol.text(trainObject.destination)
+            newRow.append(newCol)
+
+            newCol.text(trainObject.frequency)
+            newRow.append(newCol)
+
+            newCol.text() // next arrival HH:mm am/pm
+            newRow.append(newCol)
+
+            newCol.text()
+            newRow.append(newCol)
+
+            $('#train-table').append(newRow)
+
+        }
+
+
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    });
 
     $('.btn').on('click', function() {
         event.preventDefault();
-        //submit form info!!!
-        $('#train-table tr').empty();
 
         let trainName = $('#train-name').val().trim();
+        let destination = $('#destination').val().trim();
+        let trainTime = $('#inputTime').val().trim();
+        let frequency = $('#frequency').val().trim();
 
-        console.log(trainName);
+        console.log(trainTime)
+ 
+        database.ref('/trains').push({
+            trainName: trainName,
+            destination: destination,
+            trainTime: trainTime,
+            frequency: frequency,
+        })
 
-        $('#train-name').val();
-
+        $('#train-name').val('');
+        $('#destination').val('');
+        $('#inputTime').val('');
+        $('#frequency').val('');
     })
-
-
 
 
 
