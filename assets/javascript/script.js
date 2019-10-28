@@ -13,71 +13,8 @@ $(document).ready(function(){
     firebase.initializeApp(firebaseConfig);
     let database = firebase.database();
 
-    function checkTime (time) {
-        let frequency = 35
-        console.log(time)
-
-        let diff = moment().diff(moment(time, "X"), "m")
-        // let timeNow = moment().format('X')
-        // console.log(timeNow)
-        console.log(diff)
-
-        // let newTime = time.add(frequency, 'm')
-        // console.log(newTime)
-
-        // while (time < timeNow) {
-        //     time += moment().add(frequency, 'm')
-        //     if(time > moment()) {
-        //         return time
-        //     }
-        // // }
-        // time += moment().add(frequency, 'm')
-
-        // time = moment().format(time,"HH:mm a");
-        // console.log(time)
-
-        // if (time < timeNow) {
-        //     time += moment()
-        // }
-
-        // let tempTime = time
-
-
-        // let trialTime = time.diff(timeNow)
-        // console.log(trialTime)
-        // while (time < timeNow) {
-        //     time += moment().add(35, 'm')
-        //     if(time > timeNow) {
-        //         return time
-        //     }
-        // // }
-        // for (let i = frequency; time < timeNow; i + frequency){
-        //     time = moment(time).add(35, 'm')
-        // }
-
-        // console.log(time)
-        // console.log(tempTime)
-        
-        
-
-        // // Prettify the employee start
-        // var empStartPretty = moment.unix(empStart).format("MM/DD/YYYY");
-
-        // // Calculate the months worked using hardcore math
-        // // To calculate the months worked
-        // var empMonths = moment().diff(moment(empStart, "X"), "months");
-        // console.log(empMonths);
-
-        // // Calculate the total billed rate
-        // var empBilled = empMonths * empRate;
-        // console.log(empBilled);
-
-
-    }
-
     database.ref().on('child_added', function (snapshot) {
-        //create a for loop to go through an array that makes a table row for each item in the array   
-        $('#train-table tr').empty();     
+ 
         let table = snapshot.val();
     
         let newRow = $('<tr>');
@@ -94,14 +31,29 @@ $(document).ready(function(){
         newCol3.text(table.frequency)
         newRow.append(newCol3)
 
-        checkTime(table.trainTime)
+        //write the math to finish the code
+        let time = table.trainTime
+        let diff = moment().diff(moment(time, "HH:mm"), "m")
+        let nextArrival;
+        let minAway;
+
+        if (diff <= 0) {
+            nextArrival = time
+            minAway = diff
+        } else {
+            let remainder = diff % table.frequency
+            // equation to get the remainder and time incase it is in the future---------------------------
+            console.log('remainder: ' + remainder)
+        }
+
+        ////// DISPLAY NEXT ARRIVAL IN "HH:mm a"-------------------------------
 
         let newCol4 = $('<td>');
-        newCol4.text() // next arrival HH:mm am/pm
+        newCol4.text(nextArrival) // next arrival HH:mm am/pm
         newRow.append(newCol4)
 
         let newCol5 = $('<td>');
-        newCol5.text()
+        newCol5.text(Math.abs(minAway))
         newRow.append(newCol5)
 
         $('#train-table').append(newRow)
