@@ -31,7 +31,6 @@ $(document).ready(function(){
         newCol3.text(table.frequency)
         newRow.append(newCol3)
 
-        //write the math to finish the code
         let time = table.trainTime
         let diff = moment().diff(moment(time, "HH:mm"), "m")
         let nextArrival;
@@ -40,16 +39,19 @@ $(document).ready(function(){
         if (diff <= 0) {
             nextArrival = time
             minAway = diff
+
         } else {
             let remainder = diff % table.frequency
-            // equation to get the remainder and time incase it is in the future---------------------------
-            console.log('remainder: ' + remainder)
+            minAway = table.frequency - remainder
+            nextArrival = moment().add(minAway, 'm')
+            
         }
 
-        ////// DISPLAY NEXT ARRIVAL IN "HH:mm a"-------------------------------
+        nextArrival = moment(nextArrival, "HH:mm")
+        nextArrival.format('h:mm a')
 
         let newCol4 = $('<td>');
-        newCol4.text(nextArrival) // next arrival HH:mm am/pm
+        newCol4.text(nextArrival)
         newRow.append(newCol4)
 
         let newCol5 = $('<td>');
@@ -59,7 +61,8 @@ $(document).ready(function(){
         $('#train-table').append(newRow)
 
     }, function(errorObject) {
-      console.log("Errors handled: " + errorObject.code);
+        console.log("Errors handled: " + errorObject.code);
+
     });
 
     $('.btn').on('click', function() {
